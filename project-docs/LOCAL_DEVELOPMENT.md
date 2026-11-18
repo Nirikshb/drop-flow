@@ -58,6 +58,22 @@ cd dropflow/dropflow-web && pnpm dev            # http://127.0.0.1:3000
 cd dropflow/dropflow-js-sdk && pnpm dev
 ```
 
+## Restart helpers
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/restart-api.ps1   # DB + API + migrations
+powershell -ExecutionPolicy Bypass -File scripts/restart-web.ps1   # Next dev server
+powershell -ExecutionPolicy Bypass -File scripts/start-web-prod.ps1 # production build + server
+```
+
+## Demo data
+
+```powershell
+cd dropflow-api
+node test/seed-dev.mjs
+# demo@dropflow.dev / demo12345 — creates organizations, projects, keys and real assets
+```
+
 ## Verification commands
 
 ```powershell
@@ -67,8 +83,11 @@ curl http://127.0.0.1:3001/health
 # API unit tests
 cd dropflow-api && pnpm test
 
-# SDK build + tests
-cd dropflow-js-sdk && pnpm build && pnpm test
+# Backend automated checks
+cd dropflow-api && pnpm test && node test/integration-smoke.mjs && node test/authz-check.mjs
+
+# SDK build, tests and built-package consumer check
+cd dropflow-js-sdk && pnpm build && pnpm test && node tests/consumer-check.mjs
 
 # Web build + tests + lint
 cd dropflow-web && pnpm build && pnpm test && pnpm lint

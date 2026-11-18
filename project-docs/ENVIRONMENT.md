@@ -18,6 +18,7 @@
 | `R2_ENDPOINT` | Phase 3 | — | `https://<account>.r2.cloudflarestorage.com` |
 | `R2_PUBLIC_BASE_URL` | Phase 3 | — | Optional public delivery domain |
 | `LOG_LEVEL` | no | `log` | Structured log verbosity |
+| `ADMIN_SECRET` | production | dev-only value in `.env` | Internal admin `x-admin-key` (min 16 chars) |
 
 Validation happens at bootstrap via a Zod Standard Schema in `src/config/env.validation.ts`. Missing/invalid values stop startup with a clear message.
 
@@ -32,4 +33,4 @@ Validation happens at bootstrap via a Zod Standard Schema in `src/config/env.val
 
 ## dropflow-js-sdk
 
-`.env.example` is optional and only used by local integration tests (`DROPFLOW_API_URL`, `DROPFLOW_TEST_PUBLIC_KEY`). The SDK has no build-time environment requirements.
+`.env.example` is optional and only used by local integration tests (`DROPFLOW_API_URL`, or the `API_URL` already used by the API test scripts). The consumer check provisions a disposable account, project and keys itself, so no key is supplied through the environment. The SDK has no build-time environment requirements.

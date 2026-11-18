@@ -14,6 +14,10 @@ export const envSchema = z
     DATABASE_URL: z.string().min(1),
     FRONTEND_URL: z.string().url().default('http://127.0.0.1:3000'),
 
+    // Number of trusted proxy hops, or a comma-separated address list. Unset
+    // means no proxy headers are trusted for rate limiting.
+    TRUST_PROXY: z.string().optional(),
+
     // Required in production; a documented, non-secret development fallback
     // keeps local setup frictionless. Never reuse it outside development.
     SESSION_SECRET: z.string().min(32).optional(),
@@ -27,6 +31,9 @@ export const envSchema = z
     R2_PUBLIC_BASE_URL: z.string().url().optional(),
 
     LOG_LEVEL: z.enum(['error', 'warn', 'log', 'debug', 'verbose']).default('log'),
+
+    // Internal admin surface. Never expose this value to customers.
+    ADMIN_SECRET: z.string().min(16).optional(),
   })
   .superRefine((env, ctx) => {
     if (env.NODE_ENV === 'production' && !env.SESSION_SECRET) {

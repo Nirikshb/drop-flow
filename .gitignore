@@ -5,8 +5,10 @@
 *.pem
 *.key
 
-# Local dev database
+# Local dev database and object storage
 .local-db/
+.local-storage/
+*.local-storage/
 
 # Dependencies
 node_modules/

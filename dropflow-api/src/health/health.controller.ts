@@ -1,4 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
+import { SkipThrottle } from '@nestjs/throttler';
 import {
   HealthCheck,
   HealthCheckResult,
@@ -8,6 +9,7 @@ import {
 
 /** Liveness + dependency check. `GET /health` pings PostgreSQL. */
 @Controller('health')
+@SkipThrottle()
 export class HealthController {
   constructor(
     private readonly health: HealthCheckService,
