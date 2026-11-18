@@ -1,0 +1,117 @@
+/* Standalone dark design system for the Nonlinear-inspired template page. */
+.nl-page {
+  --nl-bg: #000000;
+  --nl-fg: #f7f8f8;
+  --nl-muted: #999999;
+  --nl-card: #141414;
+  --nl-card-2: #1a1a1a;
+  --nl-line: #232323;
+  --nl-soft: #e6e6e6;
+  background: var(--nl-bg);
+  color: var(--nl-fg);
+  font-family: "Instrument Sans", var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+.nl-page * { box-sizing: border-box; }
+.nl-page a { color: inherit; text-decoration: none; }
+.nl-page button { font: inherit; }
+.nl-wrap { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+.nl-section { padding: 110px 0; border-bottom: 1px solid #0d0d0d; }
+.nl-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--nl-muted); }
+.nl-h1 { font-size: clamp(40px, 5.4vw, 76px); font-weight: 500; letter-spacing: -.04em; line-height: 1.02; margin: 0; }
+.nl-h2 { font-size: clamp(32px, 4vw, 52px); font-weight: 500; letter-spacing: -.04em; line-height: 1.05; margin: 0; }
+.nl-h3 { font-size: clamp(24px, 2.6vw, 32px); font-weight: 500; letter-spacing: -.03em; line-height: 1.1; margin: 0; }
+.nl-lead { color: var(--nl-muted); font-size: clamp(15px, 1.5vw, 18px); line-height: 1.55; max-width: 620px; margin: 20px 0 0; }
+.nl-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 52px; padding: 0 24px; border-radius: 12px; background: var(--nl-soft); color: #000; font-size: 14px; font-weight: 500; transition: transform .15s ease, background .15s ease; }
+.nl-btn:hover { background: #fff; transform: translateY(-1px); }
+.nl-btn-ghost { background: transparent; color: var(--nl-fg); border: 1px solid var(--nl-line); }
+.nl-btn-ghost:hover { background: #101010; }
+.nl-nav { height: 70px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #0f0f0f; }
+.nl-brand { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 600; letter-spacing: -.04em; }
+.nl-brand-mark { width: 22px; height: 22px; background: var(--nl-fg); clip-path: polygon(0 0, 100% 0, 0 100%); border-radius: 3px; }
+.nl-menu { width: 24px; height: 16px; display: flex; flex-direction: column; justify-content: space-between; }
+.nl-menu span { display: block; height: 1px; background: var(--nl-fg); width: 100%; }
+.nl-hero { padding: 88px 0 0; text-align: center; }
+.nl-hero .nl-lead { margin-left: auto; margin-right: auto; }
+.nl-hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 34px; }
+.nl-mockup { margin: 64px auto 0; background: #0b0b0b; border: 1px solid var(--nl-line); border-radius: 14px; overflow: hidden; max-width: 960px; box-shadow: 0 30px 90px rgba(0,0,0,.7); }
+.nl-mock-bar { height: 38px; display: flex; align-items: center; gap: 7px; padding: 0 14px; background: #101010; border-bottom: 1px solid var(--nl-line); }
+.nl-dot { width: 8px; height: 8px; border-radius: 50%; background: #333; }
+.nl-mock-title { margin-left: 12px; font-size: 10px; color: #777; }
+.nl-mock-body { display: grid; grid-template-columns: 160px 1fr; min-height: 430px; }
+.nl-mock-side { border-right: 1px solid var(--nl-line); padding: 16px 12px; font-size: 10px; color: #888; }
+.nl-side-row { padding: 7px 8px; border-radius: 6px; }
+.nl-side-row.on { background: #1a1a1a; color: #ddd; }
+.nl-side-label { margin: 18px 8px 8px; font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: #555; }
+.nl-cal-head { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--nl-line); font-size: 11px; }
+.nl-cal-grid { display: grid; grid-template-columns: 46px repeat(5, 1fr); min-height: 320px; }
+.nl-cal-time { font-size: 9px; color: #555; padding: 10px 6px; text-align: right; border-right: 1px solid #151515; }
+.nl-cal-col { border-right: 1px solid #151515; padding: 6px 4px; position: relative; }
+.nl-day { font-size: 9px; color: #888; text-align: center; padding-bottom: 8px; }
+.nl-event { border-radius: 5px; padding: 6px 7px; font-size: 9px; line-height: 1.3; margin-bottom: 5px; border-left: 2px solid; }
+.nl-ev-green { background: #1c3226; border-color: #4ade80; color: #bbf7d0; }
+.nl-ev-orange { background: #332417; border-color: #fb923c; color: #fed7aa; }
+.nl-ev-blue { background: #172333; border-color: #60a5fa; color: #bfdbfe; }
+.nl-ev-gray { background: #1c1c1c; border-color: #666; color: #aaa; }
+.nl-ai-card { position: absolute; right: 10px; bottom: 10px; width: 190px; background: #141414; border: 1px solid #2c2c2c; border-radius: 9px; padding: 10px; font-size: 9px; color: #ccc; box-shadow: 0 12px 30px rgba(0,0,0,.6); }
+.nl-ai-badge { display: inline-flex; align-items: center; gap: 6px; color: #a78bfa; font-size: 9px; font-weight: 600; }
+.nl-ai-btn { margin-top: 8px; background: #f59e0b; color: #1a1200; border-radius: 5px; padding: 5px 8px; font-size: 9px; font-weight: 600; display: inline-block; }
+.nl-logos { display: flex; justify-content: center; align-items: center; gap: clamp(24px, 5vw, 64px); flex-wrap: wrap; padding: 44px 0; border-bottom: 1px solid #0d0d0d; color: #777; font-size: clamp(13px, 1.7vw, 20px); font-weight: 600; letter-spacing: -.03em; }
+.nl-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.nl-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.nl-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.nl-card { background: var(--nl-card); border: 1px solid var(--nl-line); border-radius: 12px; padding: 26px; }
+.nl-card-title { font-size: 17px; font-weight: 500; letter-spacing: -.02em; margin: 0 0 10px; }
+.nl-card-text { color: var(--nl-muted); font-size: 13px; line-height: 1.6; margin: 0; }
+.nl-section-head { max-width: 720px; margin: 0 auto 54px; text-align: center; }
+.nl-section-head .nl-lead { margin-left: auto; margin-right: auto; }
+.nl-feature-hero { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: end; margin-bottom: 48px; }
+.nl-feature-hero .nl-lead { margin: 0; }
+.nl-tabs { display: grid; grid-template-columns: 240px 1fr; gap: 40px; align-items: start; }
+.nl-tab-list { display: flex; flex-direction: column; gap: 6px; }
+.nl-tab { text-align: left; background: transparent; border: 1px solid transparent; color: #777; padding: 14px 16px; border-radius: 10px; cursor: pointer; font-size: 14px; display: flex; gap: 12px; }
+.nl-tab span { color: #555; font-size: 11px; }
+.nl-tab.on { background: #121212; border-color: var(--nl-line); color: var(--nl-fg); }
+.nl-tab.on span { color: #a78bfa; }
+.nl-panel { background: var(--nl-card); border: 1px solid var(--nl-line); border-radius: 12px; padding: 32px; min-height: 260px; }
+.nl-panel-art { height: 110px; border-radius: 8px; background: linear-gradient(135deg, #1b1b1b, #0d0d0d); border: 1px solid #262626; margin-bottom: 24px; position: relative; overflow: hidden; }
+.nl-panel-art::after { content: ""; position: absolute; inset: 16px 20px; background: repeating-linear-gradient(90deg, #222 0 40px, transparent 40px 56px); border-radius: 4px; opacity: .7; }
+.nl-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.nl-stat { padding: 34px 26px; background: #0c0c0c; border: 1px solid var(--nl-line); border-radius: 12px; }
+.nl-stat-num { font-size: clamp(40px, 5vw, 64px); font-weight: 500; letter-spacing: -.05em; line-height: 1; }
+.nl-stat-label { color: #a78bfa; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; margin-top: 18px; }
+.nl-stat-text { color: var(--nl-muted); font-size: 13px; margin-top: 10px; line-height: 1.5; }
+.nl-view { background: var(--nl-card); border: 1px solid var(--nl-line); border-radius: 12px; padding: 22px; }
+.nl-view-art { height: 120px; border: 1px solid #262626; border-radius: 8px; background: #0e0e0e; margin-bottom: 18px; padding: 12px; }
+.nl-view-bar { height: 8px; border-radius: 4px; background: #262626; margin-bottom: 8px; }
+.nl-view-bar.a { width: 70%; }
+.nl-view-bar.b { width: 45%; background: #313131; }
+.nl-view-bar.c { width: 85%; background: #2b2b2b; }
+.nl-quote { font-size: clamp(16px, 1.8vw, 21px); line-height: 1.5; letter-spacing: -.02em; }
+.nl-person { display: flex; align-items: center; gap: 12px; margin-top: 26px; }
+.nl-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #4f46e5, #9333ea); display: grid; place-items: center; font-size: 12px; font-weight: 600; }
+.nl-person-name { font-size: 13px; }
+.nl-person-role { font-size: 11px; color: var(--nl-muted); }
+.nl-blog-card { background: #141414; border: 1px solid var(--nl-line); border-radius: 12px; overflow: hidden; display: block; }
+.nl-blog-art { height: 180px; background: radial-gradient(circle at 30% 30%, #2a2a4a, #111 60%); border-bottom: 1px solid var(--nl-line); }
+.nl-blog-body { padding: 20px; }
+.nl-tag { font-size: 10px; color: #a78bfa; letter-spacing: .1em; text-transform: uppercase; }
+.nl-faq-item { border-bottom: 1px solid var(--nl-line); }
+.nl-faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 20px; background: transparent; border: 0; color: var(--nl-fg); padding: 22px 0; text-align: left; cursor: pointer; font-size: 16px; }
+.nl-faq-a { color: var(--nl-muted); font-size: 14px; line-height: 1.65; padding: 0 0 22px; max-width: 760px; }
+.nl-final { text-align: center; padding: 100px 0; }
+.nl-footer { border-top: 1px solid var(--nl-line); padding: 28px 0; display: flex; justify-content: space-between; align-items: center; color: #666; font-size: 11px; flex-wrap: wrap; gap: 14px; }
+.nl-footer a:hover { color: #fff; }
+@media (max-width: 900px) {
+  .nl-grid-4, .nl-grid-3 { grid-template-columns: 1fr 1fr; }
+  .nl-feature-hero, .nl-grid-2, .nl-tabs { grid-template-columns: 1fr; }
+  .nl-mock-body { grid-template-columns: 1fr; }
+  .nl-mock-side { display: none; }
+  .nl-cal-grid { grid-template-columns: 36px repeat(5, 1fr); }
+}
+@media (max-width: 600px) {
+  .nl-section { padding: 72px 0; }
+  .nl-grid-3, .nl-grid-4, .nl-stats { grid-template-columns: 1fr; }
+  .nl-ai-card { display: none; }
+}
