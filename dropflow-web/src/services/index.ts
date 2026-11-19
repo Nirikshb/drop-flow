@@ -8,7 +8,9 @@ import type {
   ActivityEvent, ApiKey, Asset, Organization, Project, UsageSummary, User,
 } from "@/types";
 import { ApiError } from "./auth";
-import type { DashboardService, UpdateProjectInput } from "./types";
+import type {
+  AssetsPage, DashboardService, ListAssetsOptions, UpdateProjectInput,
+} from "./types";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:3001";
 
@@ -118,14 +120,28 @@ export const dashboardService: DashboardService = {
   },
 
   async listAssets(projectId?: string) {
-    const id = await resolveProjectId(projectId);
-    const result = await request<{ data: Asset[] }>(`/v1/assets?projectId=${id}&limit=100`);
-    return result.data;
+    const page = await this.listAssetsPage(projectId ?? (await resolveProjectId()), { limit: 100 });
+    return page.data;
   },
 
-  async deleteAsset(assetId: string) {
-    const id = await resolveProjectId();
-    await request(`/v1/assets/${assetId}?projectId=${id}`, { method: "DELETE" });
+  async listAssetsPage(projectId: string, options: ListAssetsOptions = {}): Promise<AssetsPage> {
+    const params = new URLSearchParams();
+    params.set("projectId", projectId);
+    if (options.search) params.set("search", options.search);
+    if (options.mimeType) params.set("mimeType", options.mimeType);
+    if (options.sort) params.set("sort", options.sort);
+    if (options.limit !== undefined) params.set("limit", String(options.limit));
+    if (options.offset !== undefined) params.set("offset", String(options.offset));
+    return request<AssetsPage>(`/v1/assets?${params.toString()}`);
+  },
+
+  getAsset(projectId: string, id: string): Promise<Asset> {
+    return request<Asset>(`/v1/assets/${id}?projectId=${encodeURIComponent(projectId)}`);
+  },
+
+  async deleteAsset(assetId: string, projectId?: string) {
+    const id = projectId ?? await resolveProjectId();
+    await request(`/v1/assets/${assetId}?projectId=${encodeURIComponent(id)}`, { method: "DELETE" });
   },
 
   async getUsage() {
