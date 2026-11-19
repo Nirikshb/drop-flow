@@ -6,22 +6,25 @@ interface LogoProps {
   className?: string;
   href?: string;
   compact?: boolean;
+  /** Scaled-up lockup used by the large site header. */
+  large?: boolean;
 }
 
 /** Original Dropflow wordmark: a geometric bracket + downward arrow/droplet mark. */
-export function Logo({ className, href = "/", compact = false }: LogoProps) {
+export function Logo({ className, href = "/", compact = false, large = false }: LogoProps) {
   return (
     <Link
       href={href}
       aria-label="Dropflow home"
       className={cn(
-        "inline-flex shrink-0 items-center gap-2 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        "inline-flex shrink-0 items-center rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        large ? "gap-3.5" : "gap-2",
         className,
       )}
     >
       <svg
         viewBox="0 0 28 28"
-        className="size-7 shrink-0"
+        className={cn("shrink-0", large ? "size-10 lg:size-11" : "size-7")}
         fill="none"
         aria-hidden="true"
       >
@@ -43,7 +46,14 @@ export function Logo({ className, href = "/", compact = false }: LogoProps) {
         />
       </svg>
       {!compact && (
-        <span className="text-[1.05rem] font-semibold tracking-[-0.035em] text-foreground">
+        <span
+          className={cn(
+            "text-foreground",
+            large
+              ? "text-[1.4rem] font-bold tracking-[-0.03em] max-[480px]:hidden lg:text-[1.75rem]"
+              : "text-[1.05rem] font-semibold tracking-[-0.035em]",
+          )}
+        >
           dropflow
         </span>
       )}
