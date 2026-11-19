@@ -18,13 +18,13 @@ export function Logo({ className, href = "/", compact = false, large = false }: 
       aria-label="Dropflow home"
       className={cn(
         "inline-flex shrink-0 items-center rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-        large ? "gap-3.5" : "gap-2",
+        large ? "gap-2.5" : "gap-2",
         className,
       )}
     >
       <svg
         viewBox="0 0 28 28"
-        className={cn("shrink-0", large ? "size-10 lg:size-11" : "size-7")}
+        className={cn("shrink-0", large ? "size-8 lg:size-9" : "size-7")}
         fill="none"
         aria-hidden="true"
       >
@@ -50,7 +50,7 @@ export function Logo({ className, href = "/", compact = false, large = false }: 
           className={cn(
             "text-foreground",
             large
-              ? "text-[1.4rem] font-bold tracking-[-0.03em] max-[480px]:hidden lg:text-[1.75rem]"
+              ? "text-[1.15rem] font-semibold tracking-[-0.03em] max-[480px]:hidden lg:text-[1.3rem]"
               : "text-[1.05rem] font-semibold tracking-[-0.035em]",
           )}
         >

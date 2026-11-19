@@ -40,8 +40,11 @@ const mainLinks = [
   { href: "/pricing", label: "Pricing" },
 ];
 
+/* Reference: Framer's own navbar (64px, 12–14px labels, no top border) and
+   InTheWork (76px). Three-column layout keeps the brand and actions balanced
+   instead of leaving a large empty bar at tablet widths. */
 const navLinkBase =
-  "relative rounded-md px-3 py-4 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+  "relative rounded-md px-2.5 py-2 text-[13px] font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
 export function SiteHeader() {
   const [open, setOpen] = React.useState(false);
@@ -61,82 +64,95 @@ export function SiteHeader() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 w-full bg-background transition-shadow [&_svg_rect]:fill-foreground",
-        scrolled && "border-b shadow-[0_1px_2px_rgba(0,0,0,0.06)]",
+        "sticky top-0 z-40 w-full bg-background/95 transition-shadow [&_svg_rect]:fill-foreground",
+        scrolled && "border-b shadow-[0_1px_2px_rgba(0,0,0,0.05)]",
       )}
     >
-      <div className="container-wide flex h-[68px] items-center justify-between gap-6 md:h-[76px] lg:h-[88px]">
-        <div className="flex min-w-0 items-center gap-4 lg:gap-6">
+      <div className="container-wide grid h-16 grid-cols-[auto_1fr_auto] items-center gap-4 lg:h-[72px] lg:gap-8">
+        <div className="flex min-w-0 items-center">
           <Logo large />
-          <span aria-hidden="true" className="hidden h-6 w-px bg-border lg:block" />
-          <nav aria-label="Main navigation" className="hidden items-center gap-1 lg:flex">
-            {mainLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                aria-current={isActive(link.href) ? "page" : undefined}
-                className={cn(navLinkBase, isActive(link.href) && "text-foreground")}
-              >
-                {link.label}
-                {isActive(link.href) && (
-                  <span
-                    aria-hidden="true"
-                    className="absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-foreground"
-                  />
-                )}
-              </Link>
-            ))}
-
-            <DropdownMenu>
-              <DropdownMenuTrigger
-                className={cn(navLinkBase, "group inline-flex items-center gap-1.5")}
-              >
-                Resources
-                <ChevronDown className="size-4 transition-transform group-data-[popup-open]:rotate-180" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56 rounded-lg">
-                <DropdownMenuLabel>Resources</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem render={<Link href="/contact" className="gap-2" />}>
-                  <Mail aria-hidden="true" />
-                  Contact
-                </DropdownMenuItem>
-                <DropdownMenuItem disabled>
-                  <Activity aria-hidden="true" />
-                  Status
-                  <span className="ml-auto text-xs text-muted-foreground">Soon</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem disabled>
-                  <GitBranch aria-hidden="true" />
-                  GitHub
-                  <span className="ml-auto text-xs text-muted-foreground">Soon</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </nav>
         </div>
 
-        <div className="hidden items-center gap-2 md:flex">
-          <Button variant="ghost" className="h-10 px-4" render={<Link href="/login" />}>
+        <nav
+          aria-label="Main navigation"
+          className="hidden items-center justify-center gap-0.5 min-[740px]:flex"
+        >
+          {mainLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              aria-current={isActive(link.href) ? "page" : undefined}
+              className={cn(navLinkBase, isActive(link.href) && "text-foreground")}
+            >
+              {link.label}
+              {isActive(link.href) && (
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-x-2.5 -bottom-0.5 h-0.5 rounded-full bg-foreground"
+                />
+              )}
+            </Link>
+          ))}
+
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              className={cn(navLinkBase, "group inline-flex items-center gap-1")}
+            >
+              Resources
+              <ChevronDown className="size-3.5 transition-transform group-data-[popup-open]:rotate-180" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56 rounded-lg">
+              <DropdownMenuLabel>Resources</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem render={<Link href="/contact" className="gap-2" />}>
+                <Mail aria-hidden="true" />
+                Contact
+              </DropdownMenuItem>
+              <DropdownMenuItem disabled>
+                <Activity aria-hidden="true" />
+                Status
+                <span className="ml-auto text-xs text-muted-foreground">Soon</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem disabled>
+                <GitBranch aria-hidden="true" />
+                GitHub
+                <span className="ml-auto text-xs text-muted-foreground">Soon</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </nav>
+
+        <div className="hidden items-center justify-end gap-2 min-[740px]:flex">
+          <Button
+            variant="ghost"
+            className="hidden h-9 px-3 text-[13px] lg:inline-flex"
+            render={<Link href="/login" />}
+          >
             Log in
           </Button>
-          <Button className="h-11 gap-2 px-5" render={<Link href="/signup" />}>
+          <Button
+            className="h-9 gap-1.5 rounded-full px-4 text-[13px]"
+            render={<Link href="/signup" />}
+          >
             Get started
-            <ArrowRight aria-hidden="true" />
+            <ArrowRight aria-hidden="true" className="size-3.5" />
           </Button>
         </div>
 
-        <Sheet open={open} onOpenChange={setOpen}>
+        <div className="flex items-center justify-end min-[740px]:hidden">
           <Button
             type="button"
             variant="ghost"
             size="icon"
-            className="size-10 rounded-md md:hidden"
+            className="size-9 rounded-full"
             aria-label="Open navigation menu"
             onClick={() => setOpen(true)}
           >
-            <Menu aria-hidden="true" className="size-5" />
+            <Menu aria-hidden="true" className="size-4" />
           </Button>
+        </div>
+
+        <Sheet open={open} onOpenChange={setOpen}>
           <SheetContent side="right" className="w-[85%] rounded-none sm:max-w-xs">
             <SheetHeader>
               <SheetTitle>Menu</SheetTitle>
