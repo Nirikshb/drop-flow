@@ -3,53 +3,26 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  Activity,
-  ArrowRight,
-  ChevronDown,
-  GitBranch,
-  Mail,
-  Menu,
-} from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { ArrowRight, Mail } from "lucide-react";
 
 import { Logo } from "@/components/marketing/logo";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
-const mainLinks = [
+const navLinks = [
   { href: "/features", label: "Product" },
   { href: "/how-it-works", label: "How it works" },
   { href: "/docs", label: "Documentation" },
   { href: "/pricing", label: "Pricing" },
+  { href: "/resourcesnew", label: "Resources" },
 ];
-
-/* Reference: Framer's own navbar (64px, 12–14px labels, no top border) and
-   InTheWork (76px). Three-column layout keeps the brand and actions balanced
-   instead of leaving a large empty bar at tablet widths. */
-const navLinkBase =
-  "relative rounded-md px-2.5 py-2 text-[13px] font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
 export function SiteHeader() {
   const [open, setOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
   const pathname = usePathname();
+  const reduceMotion = useReducedMotion();
 
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -58,74 +31,79 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  React.useEffect(() => setOpen(false), [pathname]);
+
+  React.useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
   const isActive = (href: string) =>
     pathname === href || pathname.startsWith(`${href}/`);
+
+  const spring = reduceMotion
+    ? { duration: 0 }
+    : { type: "spring" as const, stiffness: 420, damping: 36 };
+
+  const panelVariants = {
+    hidden: { opacity: 0, y: -10 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: reduceMotion ? 0 : 0.22, staggerChildren: reduceMotion ? 0 : 0.035 },
+    },
+    exit: { opacity: 0, y: -8, transition: { duration: reduceMotion ? 0 : 0.16 } },
+  };
+
+  const rowVariants = {
+    hidden: { opacity: 0, x: -8 },
+    visible: { opacity: 1, x: 0 },
+  };
 
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 w-full bg-background/95 transition-shadow [&_svg_rect]:fill-foreground",
-        scrolled && "border-b shadow-[0_1px_2px_rgba(0,0,0,0.05)]",
+        "sticky top-0 z-50 w-full border-b border-transparent bg-background/95 backdrop-blur-sm transition-[border-color,box-shadow] duration-300 [&_svg_rect]:fill-foreground",
+        scrolled && "border-border/70 shadow-[0_8px_24px_-18px_rgba(0,0,0,0.45)]",
       )}
     >
-      <div className="container-wide grid h-16 grid-cols-[auto_1fr_auto] items-center gap-4 lg:h-[72px] lg:gap-8">
-        <div className="flex min-w-0 items-center">
+      <div className="container-wide flex h-16 items-center justify-between gap-6 lg:h-[72px]">
+        <div className="flex shrink-0 items-center">
           <Logo large />
         </div>
 
+        {/* Desktop: floating segmented capsule with a single sliding indicator. */}
         <nav
           aria-label="Main navigation"
-          className="hidden items-center justify-center gap-0.5 min-[740px]:flex"
+          className="hidden items-center gap-0.5 rounded-full border bg-muted/40 p-1 lg:flex"
         >
-          {mainLinks.map((link) => (
+          {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               aria-current={isActive(link.href) ? "page" : undefined}
-              className={cn(navLinkBase, isActive(link.href) && "text-foreground")}
+              className="relative rounded-full px-4 py-2 text-[13px] font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
-              {link.label}
               {isActive(link.href) && (
-                <span
-                  aria-hidden="true"
-                  className="absolute inset-x-2.5 -bottom-0.5 h-0.5 rounded-full bg-foreground"
+                <motion.span
+                  layoutId="df-nav-active"
+                  className="absolute inset-0 rounded-full bg-background shadow-sm ring-1 ring-border/60"
+                  transition={spring}
                 />
               )}
+              <span className="relative z-10">{link.label}</span>
             </Link>
           ))}
-
-          <DropdownMenu>
-            <DropdownMenuTrigger
-              className={cn(navLinkBase, "group inline-flex items-center gap-1")}
-            >
-              Resources
-              <ChevronDown className="size-3.5 transition-transform group-data-[popup-open]:rotate-180" />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56 rounded-lg">
-              <DropdownMenuLabel>Resources</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem render={<Link href="/contact" className="gap-2" />}>
-                <Mail aria-hidden="true" />
-                Contact
-              </DropdownMenuItem>
-              <DropdownMenuItem disabled>
-                <Activity aria-hidden="true" />
-                Status
-                <span className="ml-auto text-xs text-muted-foreground">Soon</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem disabled>
-                <GitBranch aria-hidden="true" />
-                GitHub
-                <span className="ml-auto text-xs text-muted-foreground">Soon</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
         </nav>
 
-        <div className="hidden items-center justify-end gap-2 min-[740px]:flex">
+        <div className="hidden items-center gap-1.5 lg:flex">
           <Button
             variant="ghost"
-            className="hidden h-9 px-3 text-[13px] lg:inline-flex"
+            className="h-9 px-3 text-[13px]"
             render={<Link href="/login" />}
           >
             Log in
@@ -139,88 +117,95 @@ export function SiteHeader() {
           </Button>
         </div>
 
-        <div className="flex items-center justify-end min-[740px]:hidden">
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            className="size-9 rounded-full"
-            aria-label="Open navigation menu"
-            onClick={() => setOpen(true)}
-          >
-            <Menu aria-hidden="true" className="size-4" />
-          </Button>
-        </div>
-
-        <Sheet open={open} onOpenChange={setOpen}>
-          <SheetContent side="right" className="w-[85%] rounded-none sm:max-w-xs">
-            <SheetHeader>
-              <SheetTitle>Menu</SheetTitle>
-              <SheetDescription>Navigate Dropflow</SheetDescription>
-            </SheetHeader>
-            <nav
-              aria-label="Mobile navigation"
-              className="flex flex-col divide-y divide-border px-4"
-            >
-              {mainLinks.map((link) => (
-                <SheetClose
-                  key={link.href}
-                  render={
-                    <Link
-                      href={link.href}
-                      className={cn(
-                        "flex items-center gap-2 py-3.5 text-sm font-medium transition-colors hover:text-foreground",
-                        isActive(link.href)
-                          ? "text-foreground"
-                          : "text-muted-foreground",
-                      )}
-                    >
-                      {link.label}
-                      {isActive(link.href) && (
-                        <span className="ml-auto h-0.5 w-6 bg-foreground" />
-                      )}
-                    </Link>
-                  }
-                />
-              ))}
-              <p className="pt-6 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                Resources
-              </p>
-              <SheetClose
-                render={
-                  <Link
-                    href="/contact"
-                    className="flex items-center gap-2 py-3.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    <Mail className="size-4" aria-hidden="true" />
-                    Contact
-                  </Link>
-                }
-              />
-              <div className="flex items-center gap-2 py-3.5 text-sm text-muted-foreground/60">
-                <Activity className="size-4" aria-hidden="true" />
-                Status <span className="ml-auto text-xs">Soon</span>
-              </div>
-              <div className="flex items-center gap-2 py-3.5 text-sm text-muted-foreground/60">
-                <GitBranch className="size-4" aria-hidden="true" />
-                GitHub <span className="ml-auto text-xs">Soon</span>
-              </div>
-            </nav>
-            <SheetFooter className="flex-row gap-2">
-              <Button
-                variant="outline"
-                className="h-10 flex-1"
-                render={<Link href="/login" />}
-              >
-                Log in
-              </Button>
-              <Button className="h-10 flex-1" render={<Link href="/signup" />}>
-                Get started
-              </Button>
-            </SheetFooter>
-          </SheetContent>
-        </Sheet>
+        {/* Mobile: a morphing two-line trigger, not the desktop capsule. */}
+        <button
+          type="button"
+          className="relative flex size-10 items-center justify-center rounded-full border bg-background lg:hidden"
+          aria-label={open ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={open}
+          aria-controls="mobile-nav-panel"
+          onClick={() => setOpen((value) => !value)}
+        >
+          <span className="sr-only">{open ? "Close" : "Menu"}</span>
+          <motion.span
+            aria-hidden="true"
+            className="absolute h-px w-4 bg-foreground"
+            animate={open ? { rotate: 45, y: 0 } : { rotate: 0, y: -3 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 0.2 }}
+          />
+          <motion.span
+            aria-hidden="true"
+            className="absolute h-px w-4 bg-foreground"
+            animate={open ? { rotate: -45, y: 0 } : { rotate: 0, y: 3 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 0.2 }}
+          />
+        </button>
       </div>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            id="mobile-nav-panel"
+            key="mobile-nav"
+            variants={panelVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="absolute inset-x-0 top-full border-b bg-background shadow-[0_18px_40px_-24px_rgba(0,0,0,0.5)] lg:hidden"
+          >
+            <nav aria-label="Mobile navigation" className="container-wide py-4">
+              {navLinks.map((link, index) => (
+                <motion.div key={link.href} variants={rowVariants}>
+                  <Link
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className={cn(
+                      "flex items-center gap-4 border-b py-3 text-lg font-medium tracking-tight last:border-b-0",
+                      isActive(link.href)
+                        ? "text-foreground"
+                        : "text-muted-foreground hover:text-foreground",
+                    )}
+                  >
+                    <span className="font-mono text-[10px] font-normal text-muted-foreground/60">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    {link.label}
+                    {isActive(link.href) && (
+                      <span className="ml-auto size-1.5 rounded-full bg-foreground" />
+                    )}
+                  </Link>
+                </motion.div>
+              ))}
+
+              <motion.div variants={rowVariants} className="mt-4 flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  className="h-10 flex-1 rounded-full"
+                  render={<Link href="/login" />}
+                >
+                  Log in
+                </Button>
+                <Button
+                  className="h-10 flex-1 gap-1.5 rounded-full"
+                  render={<Link href="/signup" />}
+                >
+                  Get started <ArrowRight aria-hidden="true" className="size-3.5" />
+                </Button>
+              </motion.div>
+
+              <motion.div
+                variants={rowVariants}
+                className="mt-4 flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider text-muted-foreground"
+              >
+                <Mail aria-hidden="true" className="size-3.5" />
+                <Link href="/contact" onClick={() => setOpen(false)} className="hover:text-foreground">
+                  Contact sales
+                </Link>
+              </motion.div>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
