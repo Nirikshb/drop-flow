@@ -2,8 +2,14 @@
 .env
 .env.*
 !.env.example
+.dev.vars
 *.pem
 *.key
+
+# Cloudflare / OpenNext build output
+.open-next/
+.wrangler/
+cloudflare-env.d.ts
 
 # Local dev database and object storage
 .local-db/
