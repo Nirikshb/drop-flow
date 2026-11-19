@@ -1,0 +1,80 @@
+/*
+ * Scoped palette for /homenew ONLY.
+ *
+ * Palette: "Cold Storage" — tinted grey-green neutrals with one deep terminal
+ * green accent. Chosen over indigo/violet (the common AI default) and over the
+ * newer cream + coral + mono cluster, which designers also flag as a tell.
+ *
+ * Sources:
+ * - https://world.hey.com/kostac/spot-the-slop-a-ui-designer-s-guide-to-fixing-ai-defaults-4c448c9c
+ * - https://www.joshuasnoddy.com/blog/make-ai-built-site-not-look-ai/
+ * - https://www.nngroup.com/articles/color-enhance-design/
+ * - https://refactoringui.com/previews/building-your-color-palette
+ * - https://vercel.com/geist/colors
+ * - https://supabase.com/brand
+ * - https://resend.com/design.md
+ */
+
+:root .homenew-palette {
+  /* Page-local design tokens */
+  --hn-bg: #eceeea;
+  --hn-surface: #f7f8f5;
+  --hn-sunken: #e2e7e0;
+  --hn-ink: #141916;
+  --hn-muted: #56605a;
+  --hn-border: #c9d0c9;
+  --hn-accent: #1e6b4f;
+  --hn-accent-hover: #14513b;
+  --hn-accent-soft: #dceae2;
+  --hn-accent-ink: #14513b;
+  --hn-info: #1f4e5f;
+  --hn-info-soft: #dce6ea;
+  --hn-warn: #9a4707;
+  --hn-warn-soft: #f3e4d4;
+  --hn-ground: #13211c;
+  --hn-ground-ink: #f3f6f1;
+
+  /* Underlying theme variables consumed by Tailwind utilities and shared UI */
+  --background: var(--hn-bg);
+  --foreground: var(--hn-ink);
+  --card: var(--hn-surface);
+  --card-foreground: var(--hn-ink);
+  --popover: var(--hn-surface);
+  --popover-foreground: var(--hn-ink);
+  --primary: var(--hn-accent);
+  --primary-foreground: var(--hn-ground-ink);
+  --secondary: var(--hn-sunken);
+  --secondary-foreground: var(--hn-ink);
+  --muted: var(--hn-sunken);
+  --muted-foreground: var(--hn-muted);
+  --accent: var(--hn-accent-soft);
+  --accent-foreground: var(--hn-accent-ink);
+  --border: var(--hn-border);
+  --input: var(--hn-border);
+  --ring: var(--hn-accent);
+  --destructive: #a33420;
+  --destructive-foreground: var(--hn-ground-ink);
+}
+
+/* Paint the scoped subtree itself so transparent sections use the new canvas. */
+.homenew-palette {
+  background: var(--hn-bg);
+  color: var(--hn-ink);
+}
+
+/* Solid accent instead of the global purple/cyan gradient text. */
+.homenew-palette .text-gradient {
+  background-image: none !important;
+  color: var(--hn-accent) !important;
+  -webkit-text-fill-color: var(--hn-accent) !important;
+}
+
+/* Dark, high-contrast band for the pricing teaser and final CTA accents. */
+.homenew-palette .hn-ground {
+  background: var(--hn-ground);
+  color: var(--hn-ground-ink);
+}
+
+.homenew-palette .hn-ground .text-muted-foreground {
+  color: #b8c2bd;
+}

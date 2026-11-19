@@ -19,7 +19,7 @@ const queue = [
     progress: 78,
     state: "uploading",
     icon: ImageIcon,
-    tone: "bg-sky-500/15 text-sky-600",
+    tone: "bg-[var(--hn-info-soft)] text-[var(--hn-info)]",
   },
   {
     name: "brand-guide.pdf",
@@ -27,7 +27,7 @@ const queue = [
     progress: 100,
     state: "done",
     icon: FileText,
-    tone: "bg-rose-500/15 text-rose-600",
+    tone: "bg-[var(--hn-warn-soft)] text-[var(--hn-warn)]",
   },
   {
     name: "team-photo.png",
@@ -35,7 +35,7 @@ const queue = [
     progress: 100,
     state: "done",
     icon: FileImage,
-    tone: "bg-emerald-500/15 text-emerald-600",
+    tone: "bg-[var(--hn-accent-soft)] text-[var(--hn-accent-ink)]",
   },
   {
     name: "design-assets.zip",
@@ -43,17 +43,17 @@ const queue = [
     progress: 34,
     state: "retry",
     icon: UploadCloud,
-    tone: "bg-amber-500/15 text-amber-600",
+    tone: "bg-[var(--hn-warn-soft)] text-[var(--hn-warn)]",
   },
 ] as const;
 
 const thumbs = [
-  { from: "#7dd3fc", to: "#4f46e5", label: "WEBP" },
-  { from: "#c4b5fd", to: "#a21caf", label: "PNG" },
-  { from: "#6ee7b7", to: "#0f766e", label: "JPG" },
-  { from: "#fcd34d", to: "#ea580c", label: "PDF" },
-  { from: "#fda4af", to: "#be185d", label: "SVG" },
-  { from: "#67e8f9", to: "#4338ca", label: "MP4" },
+  { from: "#C9D0C9", to: "#56605A", label: "WEBP" },
+  { from: "#E2E7E0", to: "#9AA69C", label: "PNG" },
+  { from: "#BFD8CC", to: "#1E6B4F", label: "JPG" },
+  { from: "#E4E8E2", to: "#8A9A92", label: "PDF" },
+  { from: "#DCE6EA", to: "#1F4E5F", label: "SVG" },
+  { from: "#EEF1EC", to: "#56605A", label: "MP4" },
 ] as const;
 
 export function HeroMockup() {
@@ -65,21 +65,21 @@ export function HeroMockup() {
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -inset-6 rounded-[2rem] bg-gradient-to-br from-primary/20 via-cyan-400/10 to-transparent blur-2xl"
+        className="pointer-events-none absolute -inset-6 rounded-[2rem] bg-gradient-to-br from-[var(--hn-sunken)] via-[var(--hn-sunken)] to-transparent blur-2xl"
       />
       <div className="relative overflow-hidden rounded-2xl border bg-card shadow-2xl shadow-primary/10">
         <div className="flex items-center gap-2 border-b bg-muted/40 px-4 py-3">
           <div className="flex gap-1.5" aria-hidden="true">
-            <span className="size-2.5 rounded-full bg-rose-400/70" />
-            <span className="size-2.5 rounded-full bg-amber-400/70" />
-            <span className="size-2.5 rounded-full bg-emerald-400/70" />
+            <span className="size-2.5 rounded-full bg-[var(--hn-muted)]" />
+            <span className="size-2.5 rounded-full bg-[var(--hn-border)]" />
+            <span className="size-2.5 rounded-full bg-[var(--hn-accent)]" />
           </div>
           <div className="ml-2 flex items-center gap-1.5 rounded-md border bg-background px-2.5 py-1 font-mono text-[10px] text-muted-foreground">
             <Lock className="size-3" aria-hidden="true" />
             app.dropflow.dev/uploads
           </div>
-          <Badge className="ml-auto border-transparent bg-emerald-500/15 text-emerald-700 hover:bg-emerald-500/15">
-            <span className="size-1.5 rounded-full bg-emerald-500" />
+          <Badge className="ml-auto border-transparent bg-[var(--hn-accent-soft)] text-[var(--hn-accent-ink)] hover:bg-[var(--hn-accent-soft)]">
+            <span className="size-1.5 rounded-full bg-[var(--hn-accent)]" />
             Live
           </Badge>
         </div>
@@ -116,12 +116,12 @@ export function HeroMockup() {
                           {file.name}
                         </span>
                         {file.state === "done" ? (
-                          <span className="inline-flex shrink-0 items-center gap-1 text-[10px] font-medium text-emerald-600">
+                          <span className="inline-flex shrink-0 items-center gap-1 text-[10px] font-medium text-[var(--hn-accent-ink)]">
                             <Check className="size-3" aria-hidden="true" />
                             Done
                           </span>
                         ) : file.state === "retry" ? (
-                          <span className="inline-flex shrink-0 items-center gap-1 text-[10px] font-medium text-amber-600">
+                          <span className="inline-flex shrink-0 items-center gap-1 text-[10px] font-medium text-[var(--hn-warn)]">
                             <RotateCcw className="size-3" aria-hidden="true" />
                             Retrying
                           </span>
@@ -136,9 +136,9 @@ export function HeroMockup() {
                           className={cn(
                             "block h-full rounded-full",
                             file.state === "done"
-                              ? "bg-emerald-500"
+                              ? "bg-[var(--hn-accent)]"
                               : file.state === "retry"
-                                ? "bg-amber-500"
+                                ? "bg-[var(--hn-warn)]"
                                 : "bg-primary",
                           )}
                           style={{ width: `${file.progress}%` }}
@@ -196,8 +196,8 @@ export function HeroMockup() {
                     key={item}
                     className="flex items-center gap-2 text-[11px] text-muted-foreground"
                   >
-                    <span className="flex size-4 shrink-0 items-center justify-center rounded-full bg-emerald-500/15">
-                      <Check className="size-2.5 text-emerald-600" aria-hidden="true" />
+                    <span className="flex size-4 shrink-0 items-center justify-center rounded-full bg-[var(--hn-accent-soft)]">
+                      <Check className="size-2.5 text-[var(--hn-accent-ink)]" aria-hidden="true" />
                     </span>
                     {item}
                   </li>
@@ -225,7 +225,7 @@ export function HeroMockup() {
         </span>
       </div>
       <div className="absolute -top-3 right-2 hidden items-center gap-1.5 rounded-full border bg-card px-3 py-1.5 shadow-lg sm:flex">
-        <span className="size-1.5 rounded-full bg-emerald-500" />
+        <span className="size-1.5 rounded-full bg-[var(--hn-accent)]" />
         <span className="text-[10px] font-medium">99.98% success rate</span>
       </div>
     </div>

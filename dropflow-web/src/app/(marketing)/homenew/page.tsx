@@ -28,6 +28,7 @@ import { cn } from "@/lib/utils";
 import { FaqAccordion } from "./_components/faq-accordion";
 import { HeroMockup } from "./_components/hero-mockup";
 import { RoleTabs } from "./_components/role-tabs";
+import "./homenew-palette.css";
 
 export const metadata: Metadata = {
   title: "Ship file uploads, not upload infrastructure",
@@ -105,7 +106,7 @@ const testimonials = [
     role: "VP Product",
     company: "Northstar",
     initials: "MC",
-    tone: "from-sky-500 to-indigo-600",
+    tone: "from-[var(--hn-accent)] to-[var(--hn-accent-hover)]",
   },
   {
     quote:
@@ -114,7 +115,7 @@ const testimonials = [
     role: "Staff Engineer",
     company: "Lattice Health",
     initials: "DO",
-    tone: "from-violet-500 to-fuchsia-600",
+    tone: "from-[var(--hn-info)] to-[var(--hn-accent-hover)]",
   },
   {
     quote:
@@ -123,7 +124,7 @@ const testimonials = [
     role: "Head of Operations",
     company: "Forma Studio",
     initials: "PR",
-    tone: "from-emerald-500 to-teal-600",
+    tone: "from-[var(--hn-accent)] to-[var(--hn-info)]",
   },
 ];
 
@@ -222,7 +223,7 @@ const templatePages = [
 
 export default function HomeNewPage() {
   return (
-    <>
+    <div className="homenew-palette bg-background text-foreground">
       {/* 1. Hero */}
       <section className="relative overflow-hidden border-b bg-gradient-to-b from-primary/5 via-background to-background">
         <div
@@ -235,7 +236,7 @@ export default function HomeNewPage() {
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute top-24 -right-40 size-[28rem] rounded-full bg-cyan-400/10 blur-3xl"
+          className="pointer-events-none absolute top-24 -right-40 size-[28rem] rounded-full bg-[var(--hn-sunken)] blur-3xl"
         />
         <div className="container-wide relative grid items-center gap-12 py-16 sm:py-20 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16 lg:py-24">
           <div className="max-w-2xl">
@@ -298,7 +299,7 @@ export default function HomeNewPage() {
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-24 -bottom-32 size-96 rounded-full bg-cyan-300/20 blur-3xl"
+          className="pointer-events-none absolute -right-24 -bottom-32 size-96 rounded-full bg-[var(--hn-sunken)] blur-3xl"
         />
         <div className="container-wide relative py-14 sm:py-16">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
@@ -470,9 +471,9 @@ export default function HomeNewPage() {
               </p>
               <div className="mt-5 max-w-sm rounded-xl border bg-background/80 p-3 shadow-sm backdrop-blur">
                 <div className="flex items-center gap-2.5">
-                  <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-emerald-500/15">
+                  <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-[var(--hn-accent-soft)]">
                     <Check
-                      className="size-4 text-emerald-600"
+                      className="size-4 text-[var(--hn-accent-ink)]"
                       aria-hidden="true"
                     />
                   </span>
@@ -484,7 +485,7 @@ export default function HomeNewPage() {
                       Signature verified · 2.4 MB
                     </p>
                   </div>
-                  <Badge className="border-transparent bg-emerald-500/15 text-emerald-700 hover:bg-emerald-500/15">
+                  <Badge className="border-transparent bg-[var(--hn-accent-soft)] text-[var(--hn-accent-ink)] hover:bg-[var(--hn-accent-soft)]">
                     Passed
                   </Badge>
                 </div>
@@ -493,9 +494,9 @@ export default function HomeNewPage() {
           </div>
 
           {/* Smart retries */}
-          <div className="relative flex flex-col overflow-hidden rounded-2xl border border-emerald-500/20 bg-gradient-to-br from-emerald-500/10 via-background to-background p-6 sm:col-span-2">
+          <div className="relative flex flex-col overflow-hidden rounded-2xl border border-[var(--hn-border)] bg-gradient-to-br from-[var(--hn-accent-soft)] via-background to-background p-6 sm:col-span-2">
             <div className="flex items-center gap-2">
-              <span className="inline-flex size-9 items-center justify-center rounded-xl border bg-background/70 text-emerald-600 shadow-sm">
+              <span className="inline-flex size-9 items-center justify-center rounded-xl border bg-background/70 text-[var(--hn-accent-ink)] shadow-sm">
                 <RefreshCw className="size-4" aria-hidden="true" />
               </span>
               <h3 className="text-base font-semibold">Smart retries</h3>
@@ -506,9 +507,9 @@ export default function HomeNewPage() {
             </p>
             <div className="mt-auto flex items-center gap-2 pt-5">
               {[
-                { label: "Attempt 1", sub: "failed", tone: "bg-rose-500/15 text-rose-600" },
-                { label: "Retry 2", sub: "1.2s", tone: "bg-amber-500/15 text-amber-600" },
-                { label: "Delivered", sub: "ok", tone: "bg-emerald-500/15 text-emerald-600" },
+                { label: "Attempt 1", sub: "failed", tone: "bg-[var(--hn-warn-soft)] text-[var(--hn-warn)]" },
+                { label: "Retry 2", sub: "1.2s", tone: "bg-[var(--hn-warn-soft)] text-[var(--hn-warn)]" },
+                { label: "Delivered", sub: "ok", tone: "bg-[var(--hn-accent-soft)] text-[var(--hn-accent-ink)]" },
               ].map((step, index) => (
                 <div key={step.label} className="flex flex-1 items-center gap-2">
                   <div
@@ -532,8 +533,8 @@ export default function HomeNewPage() {
           </div>
 
           {/* Adaptive compression */}
-          <div className="relative flex flex-col overflow-hidden rounded-2xl border border-sky-500/20 bg-gradient-to-br from-sky-500/10 via-background to-background p-6">
-            <span className="inline-flex size-9 items-center justify-center rounded-xl border bg-background/70 text-sky-600 shadow-sm">
+          <div className="relative flex flex-col overflow-hidden rounded-2xl border border-[var(--hn-border)] bg-gradient-to-br from-[var(--hn-info-soft)] via-background to-background p-6">
+            <span className="inline-flex size-9 items-center justify-center rounded-xl border bg-background/70 text-[var(--hn-info)] shadow-sm">
               <Gauge className="size-4" aria-hidden="true" />
             </span>
             <h3 className="mt-4 text-base font-semibold">Adaptive compression</h3>
@@ -543,13 +544,13 @@ export default function HomeNewPage() {
             <div className="mt-auto flex items-baseline gap-2 pt-5">
               <span className="text-sm text-muted-foreground line-through">4.8 MB</span>
               <ArrowRight className="size-3.5 text-muted-foreground" aria-hidden="true" />
-              <span className="text-xl font-semibold text-sky-600">1.2 MB</span>
+              <span className="text-xl font-semibold text-[var(--hn-info)]">1.2 MB</span>
             </div>
           </div>
 
           {/* Anomaly detection */}
-          <div className="relative flex flex-col overflow-hidden rounded-2xl border border-rose-500/20 bg-gradient-to-br from-rose-500/10 via-background to-background p-6">
-            <span className="inline-flex size-9 items-center justify-center rounded-xl border bg-background/70 text-rose-600 shadow-sm">
+          <div className="relative flex flex-col overflow-hidden rounded-2xl border border-[var(--hn-border)] bg-gradient-to-br from-[var(--hn-warn-soft)] via-background to-background p-6">
+            <span className="inline-flex size-9 items-center justify-center rounded-xl border bg-background/70 text-[var(--hn-warn)] shadow-sm">
               <ScanSearch className="size-4" aria-hidden="true" />
             </span>
             <h3 className="mt-4 text-base font-semibold">Anomaly detection</h3>
@@ -562,7 +563,7 @@ export default function HomeNewPage() {
                   key={index}
                   className={cn(
                     "flex-1 rounded-sm",
-                    index === 6 ? "bg-rose-500" : "bg-rose-500/20",
+                    index === 6 ? "bg-[var(--hn-warn)]" : "bg-[var(--hn-warn-soft)]",
                   )}
                   style={{ height: `${height}%` }}
                 />
@@ -571,9 +572,9 @@ export default function HomeNewPage() {
           </div>
 
           {/* Auto-tagging */}
-          <div className="relative flex flex-col overflow-hidden rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-500/10 via-background to-background p-6 sm:col-span-2">
+          <div className="relative flex flex-col overflow-hidden rounded-2xl border border-[var(--hn-border)] bg-gradient-to-br from-[var(--hn-info-soft)] via-background to-background p-6 sm:col-span-2">
             <div className="flex items-center gap-2">
-              <span className="inline-flex size-9 items-center justify-center rounded-xl border bg-background/70 text-violet-600 shadow-sm">
+              <span className="inline-flex size-9 items-center justify-center rounded-xl border bg-background/70 text-[var(--hn-info)] shadow-sm">
                 <Tag className="size-4" aria-hidden="true" />
               </span>
               <h3 className="text-base font-semibold">Auto-tagging</h3>
@@ -586,7 +587,7 @@ export default function HomeNewPage() {
               {["product", "q4-launch", "social", "approved"].map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-full border border-violet-500/20 bg-background/70 px-2.5 py-1 text-xs font-medium text-violet-700"
+                  className="rounded-full border border-[var(--hn-border)] bg-background/70 px-2.5 py-1 text-xs font-medium text-[var(--hn-info)]"
                 >
                   #{tag}
                 </span>
@@ -595,11 +596,11 @@ export default function HomeNewPage() {
           </div>
 
           {/* Usage insights */}
-          <div className="relative flex flex-col overflow-hidden rounded-2xl border border-amber-500/20 bg-gradient-to-br from-amber-500/10 via-background to-background p-6 sm:col-span-2">
+          <div className="relative flex flex-col overflow-hidden rounded-2xl border border-[var(--hn-border)] bg-gradient-to-br from-[var(--hn-warn-soft)] via-background to-background p-6 sm:col-span-2">
             <div className="flex items-start justify-between gap-3">
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="inline-flex size-9 items-center justify-center rounded-xl border bg-background/70 text-amber-600 shadow-sm">
+                  <span className="inline-flex size-9 items-center justify-center rounded-xl border bg-background/70 text-[var(--hn-warn)] shadow-sm">
                     <BarChart3 className="size-4" aria-hidden="true" />
                   </span>
                   <h3 className="text-base font-semibold">Usage insights</h3>
@@ -611,7 +612,7 @@ export default function HomeNewPage() {
               </div>
               <Badge
                 variant="secondary"
-                className="border-amber-500/20 bg-amber-500/10 text-amber-700"
+                className="border-[var(--hn-border)] bg-[var(--hn-warn-soft)] text-[var(--hn-warn)]"
               >
                 +24% this month
               </Badge>
@@ -620,7 +621,7 @@ export default function HomeNewPage() {
               {[38, 52, 44, 68, 58, 76, 70, 88, 80, 96].map((height, index) => (
                 <span
                   key={index}
-                  className="flex-1 rounded-t-sm bg-gradient-to-t from-amber-500/20 to-amber-500"
+                  className="flex-1 rounded-t-sm bg-gradient-to-t from-[var(--hn-warn-soft)] to-[var(--hn-warn)]"
                   style={{ height: `${height}%` }}
                 />
               ))}
@@ -661,7 +662,7 @@ export default function HomeNewPage() {
                 index === 1 && "lg:-translate-y-2 lg:shadow-lg",
               )}
             >
-              <div className="flex items-center gap-0.5 text-amber-500" aria-label="5 out of 5 stars">
+              <div className="flex items-center gap-0.5 text-[var(--hn-warn)]" aria-label="5 out of 5 stars">
                 {Array.from({ length: 5 }).map((_, star) => (
                   <Star
                     key={star}
@@ -750,7 +751,7 @@ export default function HomeNewPage() {
               {tier.featured && (
                 <div
                   aria-hidden="true"
-                  className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary via-cyan-500 to-violet-500"
+                  className="absolute inset-x-0 top-0 h-1 bg-[var(--hn-accent)]"
                 />
               )}
               <div className="flex items-center justify-between gap-3">
@@ -870,6 +871,6 @@ export default function HomeNewPage() {
           </nav>
         </div>
       </Section>
-    </>
+    </div>
   );
 }
