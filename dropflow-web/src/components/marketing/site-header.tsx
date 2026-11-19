@@ -21,6 +21,7 @@ const navLinks = [
 export function SiteHeader() {
   const [open, setOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
+  const headerRef = React.useRef<HTMLElement>(null);
   const pathname = usePathname();
   const reduceMotion = useReducedMotion();
 
@@ -38,8 +39,15 @@ export function SiteHeader() {
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") setOpen(false);
     };
+    const onPointer = (event: PointerEvent) => {
+      if (!headerRef.current?.contains(event.target as Node)) setOpen(false);
+    };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    window.addEventListener("pointerdown", onPointer);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("pointerdown", onPointer);
+    };
   }, [open]);
 
   const isActive = (href: string) =>
@@ -66,6 +74,7 @@ export function SiteHeader() {
 
   return (
     <header
+      ref={headerRef}
       className={cn(
         "sticky top-0 z-50 w-full border-b border-transparent bg-background/95 backdrop-blur-sm transition-[border-color,box-shadow] duration-300 [&_svg_rect]:fill-foreground",
         scrolled && "border-border/70 shadow-[0_8px_24px_-18px_rgba(0,0,0,0.45)]",
@@ -86,7 +95,7 @@ export function SiteHeader() {
               key={link.href}
               href={link.href}
               aria-current={isActive(link.href) ? "page" : undefined}
-              className="relative rounded-full px-4 py-2 text-[13px] font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="relative flex min-h-9 items-center rounded-full px-3.5 py-2 text-[clamp(12px,0.95vw,13px)] font-medium text-muted-foreground transition-[color,transform] hover:text-foreground active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               {isActive(link.href) && (
                 <motion.span
@@ -103,13 +112,13 @@ export function SiteHeader() {
         <div className="hidden items-center gap-1.5 lg:flex">
           <Button
             variant="ghost"
-            className="h-9 px-3 text-[13px]"
+            className="h-9 px-3 text-[clamp(12px,0.95vw,13px)] transition-transform active:scale-[0.98]"
             render={<Link href="/login" />}
           >
             Log in
           </Button>
           <Button
-            className="h-9 gap-1.5 rounded-full px-4 text-[13px]"
+            className="h-9 gap-1.5 rounded-full px-4 text-[clamp(12px,0.95vw,13px)] transition-transform active:scale-[0.98]"
             render={<Link href="/signup" />}
           >
             Get started
@@ -120,7 +129,7 @@ export function SiteHeader() {
         {/* Mobile: a morphing two-line trigger, not the desktop capsule. */}
         <button
           type="button"
-          className="relative flex size-10 items-center justify-center rounded-full border bg-background lg:hidden"
+          className="relative flex size-11 items-center justify-center rounded-full border bg-background transition-transform active:scale-95 lg:hidden"
           aria-label={open ? "Close navigation menu" : "Open navigation menu"}
           aria-expanded={open}
           aria-controls="mobile-nav-panel"
@@ -160,7 +169,7 @@ export function SiteHeader() {
                     href={link.href}
                     onClick={() => setOpen(false)}
                     className={cn(
-                      "flex items-center gap-4 border-b py-3 text-lg font-medium tracking-tight last:border-b-0",
+                      "flex min-h-11 items-center gap-4 border-b py-3 text-[clamp(17px,4.6vw,19px)] font-medium tracking-tight transition-colors last:border-b-0",
                       isActive(link.href)
                         ? "text-foreground"
                         : "text-muted-foreground hover:text-foreground",
@@ -180,13 +189,13 @@ export function SiteHeader() {
               <motion.div variants={rowVariants} className="mt-4 flex items-center gap-2">
                 <Button
                   variant="outline"
-                  className="h-10 flex-1 rounded-full"
+                  className="h-11 flex-1 rounded-full text-[clamp(12px,3.5vw,13px)] transition-transform active:scale-[0.98]"
                   render={<Link href="/login" />}
                 >
                   Log in
                 </Button>
                 <Button
-                  className="h-10 flex-1 gap-1.5 rounded-full"
+                  className="h-11 flex-1 gap-1.5 rounded-full text-[clamp(12px,3.5vw,13px)] transition-transform active:scale-[0.98]"
                   render={<Link href="/signup" />}
                 >
                   Get started <ArrowRight aria-hidden="true" className="size-3.5" />
@@ -195,7 +204,7 @@ export function SiteHeader() {
 
               <motion.div
                 variants={rowVariants}
-                className="mt-4 flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider text-muted-foreground"
+                className="mt-4 flex min-h-11 items-center gap-2 font-mono text-[clamp(10px,2.8vw,11px)] uppercase tracking-wider text-muted-foreground"
               >
                 <Mail aria-hidden="true" className="size-3.5" />
                 <Link href="/contact" onClick={() => setOpen(false)} className="hover:text-foreground">
